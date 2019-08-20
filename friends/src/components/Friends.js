@@ -1,10 +1,10 @@
 import React from 'react';
 
 const Friends = props => {
-    console.log(props)
+    console.log('hi',props)
     return(
         <>
-            <p>hi:{props.name} {props.age} {props.email}</p>
+            <p>{props.name} {props.age} {props.email}</p>
         </>
     )
 }

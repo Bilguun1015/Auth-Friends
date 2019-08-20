@@ -1,27 +1,34 @@
 import React, {useState, useEffect} from 'react'
-import { axiosWithAuth } from '../utils/axiosWithAuth'
 import Friends from './Friends'
+import { connect } from 'react-redux';
+import { getData } from '../actions'
 
-const FriendsList = () => {
+const FriendsList = props => {
+    console.log(props.friends)
     const [friends, setFriends] = useState([]);
-
-    useEffect(() => {
-        axiosWithAuth()
-            .get('http://localhost:5000/api/friends')
-            .then(res => {
-                setFriends(res.data)
-            })
-            .catch(err => console.log(err.response))
-    }, [])
-
     return(
         <>
-            <h4>Friends List</h4>
-            {friends && friends.map( friend => {
-                return <Friends key ={friend.id} friend={friend}/>
-            })}
+           {/* {!mapStateToProps.isLoading ? (
+               <button onClick={props.getData}>Show Friends</button>
+           ) : (
+               <>
+               
+               </>
+           )} */}
+           <button onClick={props.getData}>Show Friends</button>
+           <h4>Friends List</h4>
+               {props.friends && props.friends.map(friend => 
+                <p key={friend.id}> {friend.name}</p>)}
         </>
     )
 }
 
-export default FriendsList
+const mapStateToProps = state => {
+    
+    return {
+        friends: state.friends,
+        isLoading: state.isLoading
+    }
+}
+
+export default connect(mapStateToProps, {getData})(FriendsList)
